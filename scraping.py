@@ -4,6 +4,7 @@ from requests.exceptions import RequestException
 class Scraper():
     def __init__(self):
         self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0'}
+        self. data_json = {}
 
     def scrap_items(self):
         try:
@@ -19,7 +20,10 @@ class Scraper():
         except RequestException as e:
             return f'An error occurred: {e}'
 
-# s = Scraper()
-# pages = s.scrap_items()
-# for page in pages:
-#     print(page, end='\n')
+    def get_realty_data(self):
+        pages = self.scrap_items()
+        details = []
+        for data in pages:
+            response = requests.get(data, headers=self.headers)
+            details.append(response.json())
+        return details
