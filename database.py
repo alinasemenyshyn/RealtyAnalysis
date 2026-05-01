@@ -10,7 +10,7 @@ class DataBase:
         with sqlite3.connect('pages.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
-                 CREATE TABLE IF NOT EXITS pages (
+                 CREATE TABLE IF NOT EXISTS pages (
                      id INTEGER PRIMARY KEY
                      , price DECIMAL(10,3) NOT NULL
                      , description VARCHAR(2000) NOT NULL
@@ -33,7 +33,7 @@ class DataBase:
                 pub_date = url['publishing_date']
 
                 cursor.execute('''
-                    INSERT INTO pages (id, price, description, publication_data) 
+                    INSERT OR IGNORE INTO pages (id, price, description, publication_data) 
                     VALUES (?, ?, ?, ?)
                 ''', (realty_id, price, description, pub_date))
 
