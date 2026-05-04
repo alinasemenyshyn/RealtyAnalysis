@@ -15,9 +15,6 @@ class DataBase:
                      , price DECIMAL(10,3) NOT NULL
                      , description VARCHAR(2000) NOT NULL
                      , publication_data DATETIME NOT NULL
-                     , ai_risk_score DECIMAL(10,2)
-                     , red_flags VARCHAR(500) 
-                     , green_flags VARCHAR(500)
                  )
             ''')
             connection.commit()
