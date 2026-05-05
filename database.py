@@ -5,6 +5,7 @@ class DataBase:
     def __init__(self):
         self.scrap_data = Scraper()
 
+
     def create_table(self):
         with sqlite3.connect('pages.db') as connection:
             cursor = connection.cursor()
