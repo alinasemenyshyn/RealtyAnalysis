@@ -22,8 +22,14 @@ class Scraper():
 
     def get_realty_data(self):
         pages = self.scrap_items()
+        if isinstance(pages, str):
+            return []
         details = []
         for data in pages:
-            response = requests.get(data, headers=self.headers)
-            details.append(response.json())
+            try:
+                response = requests.get(data, headers=self.headers, timeout=10)
+                response.raise_for_status()
+                details.append(response.json())
+            except RequestException as e:
+                continue
         return details
