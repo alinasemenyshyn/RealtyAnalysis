@@ -27,10 +27,16 @@ class DataBase:
             cursor = connection.cursor()
 
             for url in self.scrap_data.get_realty_data():
-                realty_id = url['realty_id']
-                price = url['price']
-                description = url['description_uk']
-                pub_date = url['publishing_date']
+                try:
+                    realty_id = url.get('realty_id')
+                    price = url.get('price')
+                    description = url.get('description_uk', '')
+                    pub_date = url.get('publishing_date')
+                    if not all([realty_id, price, pub_date]):
+                        continue
+                    cursor.execute(...)
+                except Exception as e:
+                    continue
 
                 cursor.execute('''
                     INSERT OR IGNORE INTO pages (id, price, description, publication_data) 

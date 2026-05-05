@@ -127,10 +127,12 @@ class AIanalyst:
                         "content": result
                     })
 
+
             elif finish_reason == "stop":
-                return message.content
-            else:
-                break
+                content = message.content or ""
+                if '{' not in content:
+                    raise ValueError(f"Model returned non-JSON: {content[:200]}")
+                return content
 
 if __name__ == '__main__':
     ai = AIanalyst()

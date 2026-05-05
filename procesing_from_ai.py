@@ -22,10 +22,22 @@ class DataLoading:
             connection.commit()
 
     def load_data(self):
-        clean_data = self.data_source.text_analysis().strip().removeprefix("```json").removeprefix("```").removesuffix(
-            "```").strip()
-        parsed = json.loads(clean_data)
-        listing = parsed['listings']
+        try:
+            raw = self.data_source.text_analysis()
+            if not raw:
+                raise ValueError("Empty response from AI")
+            clean_data = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+            parsed = json.loads(clean_data)
+            listing = parsed.get('listings', [])
+            if not listing:
+                print("No listings in response")
+                return
+        except json.JSONDecodeError as e:
+            print(f"JSON parse error: {e}\nRaw: {clean_data[:300]}")
+            return
+        except Exception as e:
+            print(f"load_data error: {e}")
+            return
 
         with sqlite3.connect('result_by_AI.db') as connection:
             cursor = connection.cursor()
