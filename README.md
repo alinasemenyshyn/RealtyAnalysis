@@ -39,7 +39,7 @@ RealtyAnalysis/
 ├── .gitignore              
 ├── requirements.txt        
 └── README.md
-
+```
 ## Встановлення
  
 ### 1. Клонування репозиторію
